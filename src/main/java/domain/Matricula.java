@@ -1,16 +1,29 @@
 package domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="matricula")
 public class Matricula implements BaseEntity<Long> {
-	private Long id;
-
-	private Curso curso;
-
+	@Id
+	Long id;
+	
+	@ManyToOne
+	@JoinColumn(name = "idAlumno")
 	private Alumno alumno;
+
+	@ManyToOne
+	@JoinColumn(name = "idCurso")
+	private Curso curso;
 
 	private Double nota;
 
 	private String semestre;
-
+	
 	@Override
 	public Long getId() {
 		return id;
@@ -19,22 +32,6 @@ public class Matricula implements BaseEntity<Long> {
 	@Override
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Curso getCurso() {
-		return curso;
-	}
-
-	public void setCurso(Curso curso) {
-		this.curso = curso;
-	}
-
-	public Alumno getAlumno() {
-		return alumno;
-	}
-
-	public void setAlumno(Alumno alumno) {
-		this.alumno = alumno;
 	}
 
 	public Double getNota() {

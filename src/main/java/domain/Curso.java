@@ -2,33 +2,38 @@ package domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "curso")
 public class Curso implements BaseEntity<Long> {
+	@Id
 	private Long id;
-
-	private String codigo;
-
+	
 	private String nombre;
-
+	
 	private Integer creditos;
 
-	private List<Curso> prerequisitos;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "prerrequisito",
+	      joinColumns = @JoinColumn(name = "codigoCurso", referencedColumnName = "id"),
+	      inverseJoinColumns = @JoinColumn(name = "codigoPrerrequisito",
+	referencedColumnName = "id"))
+	private List<Curso> prerrequisitos;
 
-	@Override
-	public Long getId() {
-		return id;
+
+	public List<Curso> getPrerrequisitos() {
+		return prerrequisitos;
 	}
 
-	@Override
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	public void setPrerrequisitos(List<Curso> prerrequisitos) {
+		this.prerrequisitos = prerrequisitos;
 	}
 
 	public String getNombre() {
@@ -47,12 +52,13 @@ public class Curso implements BaseEntity<Long> {
 		this.creditos = creditos;
 	}
 
-	public List<Curso> getPrerequisitos() {
-		return prerequisitos;
+	@Override
+	public Long getId() {
+		return id;
 	}
 
-	public void setPrerequisitos(List<Curso> prerequisitos) {
-		this.prerequisitos = prerequisitos;
+	@Override
+	public void setId(Long id) {
+		this.id = id;
 	}
-
 }

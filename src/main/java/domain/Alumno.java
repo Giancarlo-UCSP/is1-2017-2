@@ -1,14 +1,29 @@
 package domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "alumno")
 public class Alumno implements BaseEntity<Long> {
+	@Id
 	private Long id;
 
+	@Column(name = "nombre", length = 128, nullable = false)
 	private String nombres;
 	
+	@Column(name = "apPaterno", length = 128, nullable = false)
 	private String apellidoPaterno;
 
+	@Column(name = "apMaterno", length = 128, nullable = false)
 	private String apellidoMaterno;
-
+	
+	@Column(nullable = false)
+	private int dni;
+	
 	@Override
 	public Long getId() {
 		return id;
@@ -41,6 +56,14 @@ public class Alumno implements BaseEntity<Long> {
 
 	public void setApellidoMaterno(String apellidoMaterno) {
 		this.apellidoMaterno = apellidoMaterno;
+	}
+	
+	public int getDni() {
+		return dni;
+	}
+
+	public void setDni(int dni) {
+		this.dni = dni;
 	}
 
 }
