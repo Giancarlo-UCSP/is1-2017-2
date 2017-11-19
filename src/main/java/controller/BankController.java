@@ -1,16 +1,24 @@
 package controller;
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import service.AccountService;
+import service.AlumnoService;
 import service.TransferService;
 import domain.Account;
 import form.CreateAccountForm;
 import form.TransferForm;
+import domain.Alumno;
+import domain.Person;
 
 @Controller
 public class BankController {
@@ -20,6 +28,8 @@ public class BankController {
 
 	@Autowired
 	AccountService accountService;
+	
+	AlumnoService alumnoService;
 
 	@RequestMapping(value = "/transfer", method = RequestMethod.POST)
 	String transfer(@ModelAttribute TransferForm transfer, ModelMap model) {
@@ -53,6 +63,38 @@ public class BankController {
 	String createAccount(@ModelAttribute CreateAccountForm createAccount, ModelMap model) {
 		accountService.createAccount(createAccount.getOwnerIds(), createAccount.getAccount());
 		return "add-account";
+	}
+	
+	//@RequestMapping(value = "/alumno", method = RequestMethod.GET)
+	//String alumno(ModelMap model) {
+		//alumnoService.getAll();
+		//return "alumno";
+	//}
+	
+	//@RequestMapping(value = "/alumno", method = RequestMethod.GET)
+    //@ResponseBody
+    //public String listarAlumnos() {
+    //    List<Alumno> alumnos = alumnoService.getAll();
+    //    return "alumno";
+    //}
+	
+	@RequestMapping(value = "/alumno", method = RequestMethod.GET)
+	String showAlumno(@RequestParam(required = false) Long id, ModelMap model) {
+		if (id != null) {
+			//Person person = personService.get(id);
+			//model.addAttribute("person", person);
+			return "alumno";
+		} else {
+			List<Alumno> alumnos = alumnoService.getAll();
+			//Collection<Person> people = personService.getAll();
+			model.addAttribute("alumno", alumnos);
+			return "alumno";
+		}
+	}
+	
+	@RequestMapping(value = "/cursos", method = RequestMethod.GET)
+	String curso(ModelMap model) {
+		return "cursos";
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)

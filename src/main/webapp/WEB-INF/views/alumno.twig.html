@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<title>Alumno</title>
+	</head>
+	
+	<body>
+		<h1>Alumnos</h1>
+		<table border="1">
+			<tr>
+	    		<th>Apellidos</th>
+	    		<th>Nombres</th>
+	  		</tr>
+
+		{% for alumno in alumnos %}
+	  		<tr>
+	    		<td>{{alumno.id}}</a></td>
+	    		<td>{{alumno.apellidoPaterno}} {{alumno.apellidoMaterno}}</td>
+	    		<td>{{alumno.nombres}}</td>
+	  		</tr>
+		{% endfor %}
+		</table>
+	</body>
+</html>
